@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityAPI", "EntityAPI\EntityAPI.csproj", "{F1B3E1AB-9941-4972-A22F-79CE0DB4FBEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetService", "ProjetService\ProjetService.csproj", "{0226A7DE-89F7-429D-9BF8-CF66C8937D47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppliWeb", "AppliWeb\AppliWeb.csproj", "{46254160-9D9D-4E50-A136-9646DA10A015}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1B3E1AB-9941-4972-A22F-79CE0DB4FBEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B3E1AB-9941-4972-A22F-79CE0DB4FBEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B3E1AB-9941-4972-A22F-79CE0DB4FBEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B3E1AB-9941-4972-A22F-79CE0DB4FBEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0226A7DE-89F7-429D-9BF8-CF66C8937D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0226A7DE-89F7-429D-9BF8-CF66C8937D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0226A7DE-89F7-429D-9BF8-CF66C8937D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0226A7DE-89F7-429D-9BF8-CF66C8937D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46254160-9D9D-4E50-A136-9646DA10A015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46254160-9D9D-4E50-A136-9646DA10A015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46254160-9D9D-4E50-A136-9646DA10A015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46254160-9D9D-4E50-A136-9646DA10A015}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
