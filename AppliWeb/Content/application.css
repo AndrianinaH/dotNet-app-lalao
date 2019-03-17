@@ -60,7 +60,7 @@ header, main {
     font-weight: bold !important;
 }
 .modal{
-    overflow-y: initial !important;
+    /*overflow-y: initial !important;*/
 }
 .my-container{
     margin: 15px;

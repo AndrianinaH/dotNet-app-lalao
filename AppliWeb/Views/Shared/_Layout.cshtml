@@ -45,11 +45,11 @@
         <li>
             <div class="userView">
                 <div class="background">
-                    <g:img dir="images" file="fond.jpg" />
+                    <img src="~/Images/fond.jpg" />
                 </div>
                 <a href="/auth/profil">
                     <span class="circle">                                                
-                        <g:img width="100" class="circle" dir="images" file="user.png" />                   
+                        <img width="100" class="circle" src="~/Images/user.png" />                   
                     </span>
                 </a>
                 <a href="/auth/profil">
@@ -65,7 +65,7 @@
         @*<g:if test="${session.grails_user != null}">
             <g:if test="${session.grails_user.type == 1}">*@
                 <li class="no-padding">
-                    <a href="/resultat">
+                    <a href="/Resultat/AllResultats">
                         <i class="material-icons">insert_chart</i>Liste des résultats
                     </a>
                 </li>
@@ -73,7 +73,7 @@
                     <div class="divider"></div>
                 </li>
                 <li class="no-padding">
-                    <a href="/utilisateur">
+                    <a href="/Utilisateur/AllUsers">
                         <i class="material-icons">group</i>Gérer les Utilisateurs
                     </a>
                 </li>
@@ -81,7 +81,7 @@
                     <div class="divider"></div>
                 </li>
                 <li class="no-padding">
-                    <a href="/message">
+                    <a href="/Message/AllMessages">
                         <i class="material-icons">list</i>Gérer les Messages
                     </a>
                 </li>

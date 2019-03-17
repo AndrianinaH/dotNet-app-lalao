@@ -8,7 +8,7 @@ using EntityAPI.Models;
 
 namespace ProjetService.Services
 {
-    class UtilisateurService
+    public class UtilisateurService
     {
         public static List<Utilisateur> UserConnected(int idUser)
         {
@@ -25,6 +25,25 @@ namespace ProjetService.Services
             {
                 List<Utilisateur> users = ctx.Utilisateurs.Where(u => u.Type == 2).ToList();
                 return users;
+            }
+        }
+
+        public static List<Utilisateur> AllUser()
+        {
+            using (var ctx = new ConfigContext())
+            {
+                List<Utilisateur> users = ctx.Utilisateurs.ToList();
+                return users;
+            }
+        }
+
+        public static void DeleteUtilisateur(Utilisateur user)
+        {
+            using (var ctx = new ConfigContext())
+            {
+                ctx.Utilisateurs.Attach(user);
+                ctx.Utilisateurs.Remove(user);
+                ctx.SaveChanges();
             }
         }
     }

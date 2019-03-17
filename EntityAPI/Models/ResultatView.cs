@@ -28,7 +28,7 @@ namespace EntityAPI.Models
 //    Utilisateurs.nom as NomAuteur,
 //    Resultats.DateCreation,
 //    IdDestinataire,
-//    u.nom as nom_destinataire,
+//    u.nom as NomDestinataire,
 //    ScoreAuteur,
 //    ScoreDestinataire
 //    FROM

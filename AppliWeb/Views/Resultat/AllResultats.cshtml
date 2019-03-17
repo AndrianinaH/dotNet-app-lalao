@@ -1,0 +1,68 @@
+﻿@using EntityAPI.Models;
+@model dynamic
+
+@Scripts.Render("~/Script/js")
+<script> moment.locale('fr');</script>
+<main>
+    <h5 class="my-titre @ViewBag.color-text text-darken-1">
+        <b>@ViewBag.Title</b>
+    </h5>
+ 
+    <div class="my-container z-depth-2">
+        <br>
+        <table class="highlight centered responsive-table" id="datatable">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Auteur</th>
+                    <th>Destinaire</th>
+                    <th>ScoreAuteur</th>
+                    <th>ScoreDestinaire</th>
+                    <th>DateCréation</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ResultatView data in Model.allResultat)
+                {
+                    <tr>
+                        <td>@data.Id</td>
+                        <td>@data.NomAuteur</td>
+                        <td>@data.NomDestinataire</td>
+                        <td>@data.ScoreAuteur</td>
+                        <td>@data.ScoreDestinataire</td>
+                        <td>@data.DateCreation</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <br>
+    </div>
+
+</main>
+<script>
+$(document).ready(function () {
+    //--------------- DataTables
+    $('#datatable').DataTable({
+        "language": getLanguage(),
+        order: [[5, "desc"]]
+    });
+    //------------- sidenav
+    $(".button-collapse").sideNav();
+    $(".collapsible").collapsible();
+    $(".dropdown-button").dropdown();
+    //-------------  tabs
+    $("ul.tabs").tabs();
+    //--------------- activer modal
+    $('.modal').modal();
+
+    //------------- select
+    $("select").material_select();
+
+});
+</script>
+
+
+
+
+

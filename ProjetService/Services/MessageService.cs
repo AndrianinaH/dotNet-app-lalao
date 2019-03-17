@@ -9,7 +9,7 @@ using EntityAPI.Models;
 
 namespace ProjetService.Services
 {
-    class MessageService
+    public class MessageService
     {
         public static void SaveMessage(Message message)
         {
@@ -24,6 +24,7 @@ namespace ProjetService.Services
         {
             using (var ctx = new ConfigContext())
             {
+                ctx.Messages.Attach(message);
                 ctx.Messages.Remove(message);
                 ctx.SaveChanges();
             }
@@ -91,6 +92,15 @@ namespace ProjetService.Services
                 }
                 return result;
             }          
+        }
+
+        public static List<MessageView> AllMessage()
+        {
+            using (var ctx = new ConfigContext())
+            {
+                List<MessageView> res = ctx.MessagesView.ToList();
+                return res;
+            }
         }
 
 

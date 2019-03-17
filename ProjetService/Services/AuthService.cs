@@ -11,7 +11,7 @@ using ProjetService.Utils;
 
 namespace ProjetService.Services
 {
-    class AuthService
+    public class AuthService
     {
         public static void Login(Utilisateur utilisateur)
         {

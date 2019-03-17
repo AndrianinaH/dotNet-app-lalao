@@ -1,0 +1,139 @@
+﻿@using EntityAPI.Models;
+@model dynamic
+
+@Scripts.Render("~/Script/js")
+<script> moment.locale('fr');</script>
+<main>
+    <h5 class="my-titre @ViewBag.color-text text-darken-1">
+        <b>@ViewBag.Title</b>
+    </h5>
+    <div class="center-align">
+        <a href="#createData" class='btn btn-large waves-effect amber'>
+            <i class="material-icons right">add</i>
+            Ajouter un utilisateur
+        </a>
+    </div>
+
+    <div class="my-container z-depth-2">
+        <br>
+        <table class="highlight centered responsive-table" id="datatable">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Nom</th>
+                    <th>Mot de passe</th>
+                    <th>Type</th>
+                    <th>dateCreation</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Utilisateur data in Model.allUser) {
+                    <tr>
+                        <td>@data.Id</td>
+                        <td>@data.Nom</td>
+                        <td>@data.Password</td>
+                        <td>@(data.Type == 1 ? "Admin" : "Joueur")</td>
+                        <td>@data.DateCreation</td>
+                        <td>
+                            <button class="btn-floating indigo darken-1 editData"
+                                    data-id="@data.Id"
+                                    data-nom="@data.Nom"
+                                    data-type="@data.Type"
+                                    data-statut="@data.Statut"
+                                    data-dateCreation="@data.DateCreation">
+                                <i class="material-icons">edit</i>
+                            </button>
+                            <button class="btn-floating red darken-1 deleteData"
+                                    data-id="@data.Id"
+                                    data-nom="@data.Nom">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br>
+    </div>
+
+    @if (ViewBag.error != null)
+    {
+        <div id="errorModal" class="modal">
+            <div class="modal-content">
+                <a class="modal-action modal-close btn-floating grey darken-3 right"><i class="material-icons">close</i></a>
+                <h5 class="center red-text">@ViewBag.error</h5>
+            </div>
+            <div class="modal-footer">
+                <div class="center-align">
+                    <a class="modal-action modal-close waves-effect waves-green btn black">Fermer</a>
+                </div>
+            </div>
+        </div>
+    }
+</main>
+<script>
+$(document).ready(function () {
+    //--------------- DataTables
+    $('#datatable').DataTable({
+        "language": getLanguage(),
+        order: [[4, "desc"]]
+    });
+    //------------- sidenav
+    $(".button-collapse").sideNav();
+    $(".collapsible").collapsible();
+    $(".dropdown-button").dropdown();
+    //-------------  tabs
+    $("ul.tabs").tabs();
+    //--------------- activer modal
+    $('.modal').modal();
+
+    //------------- select
+    $("select").material_select();
+    //------------- textarea
+    $('#textarea1').trigger('autoresize');
+    $('#contentEdit').trigger('autoresize');
+
+
+    //------------- MODAL
+    $('.editData').on("click", function () {
+        var id = $(this).attr('data-id');
+        var nom = $(this).attr('data-nom');
+        var dateCreation = $(this).attr('data-dateCreation');
+        var type = $(this).attr('data-type');
+        var statut = $(this).attr('data-statut');
+        $('#editData').modal('open');
+
+        $("#idEdit").val(id);
+        $("#nomEdit").val(nom);
+        $("#dateCreationEdit").val(dateCreation);
+        $("#statuEdit").val(statut);
+        $("#typeEdit option").each(function () {
+            $(this).removeAttr("selected");
+        });
+        $("#typeEdit option").each(function () {
+            if ($(this).val() == type) {
+                $(this).attr("selected", "selected");
+            }
+        });
+        $("select").material_select();
+        Materialize.updateTextFields();
+    });
+
+    //--------------- DELETE
+    $('.deleteData').on("click", function () {
+        var id = $(this).attr('data-id');
+        var nom = $(this).attr('data-nom');
+        $('#deleteData').modal('open');
+        $("#idDelete").val(id);
+        $("#contentDelete").text(nom);
+    });
+
+    $('#errorModal').modal('open');
+});
+</script>
+
+
+
+
+

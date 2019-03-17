@@ -8,6 +8,6 @@ namespace AppliWeb.Controllers
 {
     public class BaseController : Controller
     {
-        public static String color ="amber";
+        protected String color ="amber";
     }
 }

@@ -46,5 +46,14 @@ namespace ProjetService.Services
             }
         }
 
+        public static List<ResultatView> AllResultat()
+        {
+            using (var ctx = new ConfigContext())
+            {
+                List<ResultatView> res = ctx.ResultatsView.ToList();
+                return res;
+            }
+        }
+
     }
 }

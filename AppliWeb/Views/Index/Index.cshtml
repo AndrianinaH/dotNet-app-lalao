@@ -1,10 +1,111 @@
-﻿@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
+﻿@using EntityAPI.Models;
+@model dynamic
 
 @Scripts.Render("~/Script/js")
+<script> moment.locale('fr');</script>
+<main>
+    <div>
+        <h5 class="my-titre @ViewBag.color-text text-darken-1">Tableau de bord</h5>
+        <div class="row">
+            <div class="col s12">
+                <div class="my-container z-depth-2">
+                    <br>
+                    <p class="@ViewBag.color-text text-darken-1 center-align bold">Vos derniers messages</p>
+                    <div class="discussion_content">
+                    @foreach (MessageView data in Model.messages) {
+                        <a href="/Tchat/index/@data.IdDestinataire">
+                            <div class="user-chip-left chip amber lighten-3">
+                                    <img class="circle"src="~/Images/user.png" />                              
+                                @data.NomDestinataire
+                            </div>
+                            <div class='received_message'>
+                                <div class='received_width_message hoverable'>
+                                    <div class='card-panel amber lighten-3 message-content'>
+                                        <span class="grey-text">                                       
+                                            <time id="discussion_datetime_@data.Id">
+                                                <script>
+                                                    $('#discussion_datetime_@data.Id').html(moment('@data.DateCreation', 'DD-MM-YYYY h:mm:ss').fromNow());
+                                                </script>
+                                            </time>
+                                        </span>
+
+                                        <p class="grey-text" id="@data.Id">@data.Content</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                    }
+                    </div>
+                </div>
+               @*-- fin my-container z-depth-2 --*@
+            </div>
+            <div class="col s12">
+                <div class="my-container z-depth-2">
+                    <br>
+                    <p class="@ViewBag.color-text text-darken-1 center-align bold">Tableau de score</p>
+                    <table class="highlight centered responsive-table" id="datatable">
+                        <thead>
+                            <tr>
+                                <th>id</th> 
+                                <th>Auteur</th>
+                                <th>Destinaire</th>
+                                <th>ScoreAuteur</th>
+                                <th>ScoreDestinaire</th>
+                                <th>créer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var data in Model.resultats)
+                            {                                                    
+                                <tr>
+                                    <td>@data.Id</td>
+                                    <td>@data.NomAuteur</td>
+                                    <td>@data.NomDestinataire</td>
+                                    <td>@data.ScoreAuteur</td>
+                                    <td>@data.ScoreDestinataire</td>
+
+                                    <td>
+                                        <time id="resultat_datetime_@data.id">
+                                            <script>
+                                                     $('#resultat_datetime_@data.Id').html(moment('@data.DateCreation', 'DD-MM-YYYY h:mm:ss').fromNow());
+                                            </script>
+                                        </time>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+                @*-- fin my-container z-depth-2 --*@
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+$(document).ready(function () {
+    //--------------- DataTables
+    $('#datatable').DataTable({
+        "language": getLanguage(),
+        order: [[5, "desc"]]
+    });
+    //------------- sidenav
+    $(".button-collapse").sideNav();
+    $(".collapsible").collapsible();
+    $(".dropdown-button").dropdown();
+    //-------------  tabs
+    $("ul.tabs").tabs();
+    //--------------- activer modal
+    $('.modal').modal();
+
+    //------------- select
+    $("select").material_select();
+
+    userConnected();
+});
+</script>
+
 
 
 

@@ -20,7 +20,7 @@ namespace AppliWeb
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/application.css",
-                      "~/Content/jquery.dataTables.css.css",
+                      "~/Content/jquery.dataTables.css",
                       "~/Content/materialize.min.css"
                       ));
         }
