@@ -18,7 +18,6 @@ namespace ProjetService.Services
         {
             using (var ctx = new ConfigContext())
             {
-                resultat.IdAuteur = 1;
                 ctx.Resultats.AddOrUpdate(resultat);
                 ctx.SaveChanges();
             }          
@@ -40,7 +39,7 @@ namespace ProjetService.Services
         {
             using (var ctx = new ConfigContext())
             {
-                List<ResultatView> listResultat = ctx.ResultatsView.Where(m =>(m.IdAuteur == idAuteur && m.IdDestinataire == idAuteur))
+                List<ResultatView> listResultat = ctx.ResultatsView.Where(m =>(m.IdAuteur == idAuteur || m.IdDestinataire == idAuteur))
                 .ToList();
                 return listResultat;
             }

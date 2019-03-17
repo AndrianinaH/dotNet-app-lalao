@@ -96,6 +96,51 @@
     @* fin my-container *@
 </main>
 
+<!-- modal zone -->
+<div id="createResultat" class="modal">
+    <div class="modal-content">
+        <a class="modal-action modal-close btn-floating grey darken-3 right"><i class="material-icons">close</i></a>
+        <h5 class="center" style="margin-left: 36px;">Résultat</h5>
+
+        <div class="row">
+            <div class="col s5">
+                <div class="card horizontal">
+                    <div class="card-stacked">
+                        <div class="card-content grey darken-4">
+                            <h3 id="score-auteur" class="center white-text"></h3>
+                        </div>
+
+                        <div class="card-action center">
+                            <i class="material-icons">person_pin</i>
+                            <h5 id="nom-auteur"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s2">
+                <h3 class="center" style="margin-top: 66px;">VS</h3>
+            </div>
+
+            <div class="col s5">
+                <div class="card horizontal">
+                    <div class="card-stacked">
+                        <div class="card-content grey darken-4">
+                            <h3 id="score-destinataire" class="center white-text"></h3>
+                        </div>
+
+                        <div class="card-action center">
+                            <i class="material-icons">person_pin</i>
+                            <h5 id="nom-destinataire"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- fin modal zone -->
 
 <script>
     $(document).ready(function () {
@@ -162,10 +207,12 @@
         }
 
         function createReceivedMsg(message, rep) {
-            var imgProfil ='<img class="circle" src="~/Images/user.png"/>';
+            var imgProfil ='<img class="circle" src="/Images/user.png"/>';
 
             var username = $("#userDestinataire").val();
-            var dateCreation = moment(rep.DateCreation, 'YYYY-MM-DDThh:mm:ssZ').fromNow();
+            console.log(rep.DateCreation)
+            console.log(toJavaScriptDate(rep.DateCreation))
+            var dateCreation = moment(toJavaScriptDate(rep.DateCreation), 'YYYY-MM-DDThh:mm:ssZ').fromNow();
 
             var div = "<div class='incoming_message'>" +
                 "<div class='user-chip-left chip'>" +
@@ -185,11 +232,12 @@
         }
 
         function createSendMsg(message, rep) {
-            var imgProfil = '<img class="circle" src="~/Images/user.png"/>';
+            var imgProfil = '<img class="circle" src="/Images/user.png"/>';
          
             var username = $("#userAuteur").val();
             console.log(rep.DateCreation)
-            var dateCreation = moment(rep.DateCreation, 'YYYY-MM-DDThh:mm:ssZ').fromNow();
+            console.log(toJavaScriptDate(rep.DateCreation))
+            var dateCreation = moment(toJavaScriptDate(rep.DateCreation), 'YYYY-MM-DDThh:mm:ssZ').fromNow();
             var div = "<div class='outgoing_message'>" +
                 "<div class='right user-chip-right chip amber lighten-3'>" +
                 imgProfil +
@@ -263,7 +311,7 @@
         }
 
         function addVuMessage(){
-            var URL = "Tchat/IsMessageVu";
+            var URL = "/Tchat/IsMessageVu";
             addVu(URL);
             setTimeout(function () {
                 addVuMessage();
