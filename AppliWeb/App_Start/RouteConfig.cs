@@ -14,10 +14,11 @@ namespace AppliWeb
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Index",
+                name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Index", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

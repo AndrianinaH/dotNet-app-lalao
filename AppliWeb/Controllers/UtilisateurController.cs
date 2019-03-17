@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EntityAPI.Models;
 using ProjetService.Services;
 
 namespace AppliWeb.Controllers
@@ -18,13 +19,43 @@ namespace AppliWeb.Controllers
             ViewBag.color = this.color;
             ViewBag.user = this.GetConnectedUser();
 
-
             ViewBag.error = TempData["error"];
 
             dynamic myModel = new ExpandoObject();
             myModel.allUser = UtilisateurService.AllUser();
 
             return View(myModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Utilisateur user)
+        {
+            try
+            {
+                AuthService.SaveUtilisateur(user);
+                return RedirectToAction("AllUsers", "Utilisateur");
+            }
+            catch(Exception ex)
+            {
+                TempData["error"] = ex.Message;
+                return RedirectToAction("AllUsers", "Utilisateur");
+            }
+           
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Utilisateur user)
+        {
+            try
+            {
+                AuthService.DeleteUtilisateur(user);
+                return RedirectToAction("AllUsers", "Utilisateur");
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+                return RedirectToAction("AllUsers", "Utilisateur");
+            } 
         }
     }
 }

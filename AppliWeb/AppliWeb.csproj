@@ -153,6 +153,7 @@
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ResultatController.cs" />
+    <Compile Include="Controllers\TchatController.cs" />
     <Compile Include="Controllers\UtilisateurController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -235,6 +236,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Auth\Signup.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Tchat\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

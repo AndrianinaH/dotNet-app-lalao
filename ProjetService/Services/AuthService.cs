@@ -75,6 +75,7 @@ namespace ProjetService.Services
             {
                 List<Message> allMessage = ctx.Messages.Where(m => m.IdAuteur == utilisateur.Id && m.IdDestinataire == utilisateur.Id).ToList();
                 if (allMessage.Count != 0) throw new Exception("Un message est encore assigné à cet utilisateur, supprimez ce message avant de supprimer cet utilisateur");
+                ctx.Utilisateurs.Attach(utilisateur);
                 ctx.Utilisateurs.Remove(utilisateur);
                 ctx.SaveChanges();
             }

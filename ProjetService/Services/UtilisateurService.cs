@@ -46,5 +46,13 @@ namespace ProjetService.Services
                 ctx.SaveChanges();
             }
         }
+
+        public static Utilisateur GetUserById(int id)
+        {
+            using (var ctx = new ConfigContext())
+            {
+                return ctx.Utilisateurs.Single(u => u.Id == id);
+            }
+        }
     }
 }

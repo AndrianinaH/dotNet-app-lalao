@@ -22,3 +22,14 @@ function getLanguage(){
         }
     };
 }
+
+function ToJavaScriptDate(value) {
+    var pattern = /Date\(([^)]+)\)/;
+    var results = pattern.exec(value);
+    var dt = new Date(parseFloat(results[1]));
+    return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+}
+
+function jsonToDate(date, format) {
+    return moment(date).format(format);
+}

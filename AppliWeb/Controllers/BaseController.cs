@@ -12,6 +12,7 @@ namespace AppliWeb.Controllers
     {
         protected String color ="amber";
 
+        //----------- for FormsAuthentication (role manager)
         protected Utilisateur GetConnectedUser()
         {
             if (HttpContext.User.Identity.IsAuthenticated){
@@ -20,6 +21,12 @@ namespace AppliWeb.Controllers
             else{
                 return null;
             }
+        }
+
+        //----------- for rest service (session du navigateur web)
+        protected Utilisateur GetSessionUser()
+        {  
+            return (Utilisateur)Session["app_lalao_user"]; 
         }
     }
 }

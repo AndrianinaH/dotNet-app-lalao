@@ -1,0 +1,280 @@
+﻿@using EntityAPI.Models;
+@model dynamic
+
+@Scripts.Render("~/Script/js")
+<script> moment.locale('fr');</script>
+<main>
+    <asset:javascript src="jquery-3.1.1.min.js" />
+    <asset:javascript src="materialize.min.js" />
+    <asset:javascript src="jquery.dataTables.js" />
+    <asset:javascript src="moment-with-locales.min.js" />
+    <asset:javascript src="utile.js" />
+    <asset:javascript src="user.js" />
+    <script> moment.locale('fr');</script>
+
+    <div class="my-container">
+        <h5 class="@ViewBag.color-text text-darken-1"><strong>@Model.destinataire.Nom</strong></h5>
+        <input type="hidden" id="userAuteur" value="@ViewBag.user.Nom">
+        <input type="hidden" id="userDestinataire" value="@Model.destinataire.Nom">
+
+        <div class="discussion_content">
+            @foreach(Message message in Model.messages) {
+                if (message.IdAuteur == ViewBag.user.Id)
+                {
+                    <div class='outgoing_message'>
+                        <div class="right user-chip-right chip amber lighten-3">
+                            <img class="circle" src="~/Images/user.png" />
+                            @ViewBag.user.Nom
+                        </div>
+
+                        <div class='sent_message'>
+                            <div class='card-panel amber lighten-3 message-content'>
+                                <span class="grey-text right-align">
+                                    <time id="discussion_datetime_@message.Id">
+                                        <script>
+                                            $('#discussion_datetime_@message.Id').html(moment('@message.DateCreation', 'DD-MM-YYYY h:mm:ss').fromNow());
+                                        </script>
+                                    </time>
+                                </span>
+                                <p id="@message.Id" class='grey-text'>@message.Content</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class='incoming_message'>
+                        <div class="user-chip-left chip">
+                            <img class="circle" src="~/Images/user.png" />
+                            @Model.destinataire.Nom
+                        </div>
+
+                        <div class='received_message'>
+                            <div class='received_width_message'>
+                                <div class='card-panel grey lighten-3 message-content'>
+                                    <span class="grey-text">
+                                        <time id="discussion_datetime_@message.Id">
+                                            <script>
+                                            $('#discussion_datetime_@message.Id').html(moment('@message.DateCreation', 'DD-MM-YYYY h:mm:ss').fromNow());
+                                            </script>
+                                        </time>     
+                                    </span>
+                                    <p id="@message.Id" class='grey-text'>@message.Content</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+
+        <div class="row">
+            <div class="row">
+                <div class="input-field col s9">
+                    <input id="message" type="text">
+                    <label>Votre message</label>
+                </div>
+
+                <div class="input-field col s1">
+                    <a title="envoyer" id="send" class="btn-floating btn-large waves-effect waves-light red">
+                        <i class="material-icons">send</i>
+                    </a>
+                </div>
+
+                <div class="input-field col s1">
+                    <a title="jouer" id="play"
+                       class="btn-floating btn-large waves-effect waves-light cyan createResultat">
+                        <i class="material-icons">games</i>
+                    </a>
+                </div>
+            </div>
+            @* fin row *@
+        </div>
+        @* fin row *@
+    </div>
+    @* fin my-container *@
+</main>
+
+
+<script>
+    $(document).ready(function () {
+        //--------------- DataTables
+        $('#datatable').DataTable({
+            "language": getLanguage(),
+        });
+        //------------- sidenav
+        $(".button-collapse").sideNav();
+        $(".collapsible").collapsible();
+        $(".dropdown-button").dropdown();
+        //-------------  tabs
+        $("ul.tabs").tabs();
+        //--------------- activer modal
+        $('.modal').modal();
+
+        //------------- select
+        $("select").material_select();
+
+        //------------- charger message
+        charger();
+        userConnected();
+        addVuMessage();
+
+        $('.createResultat').click(function () {
+            var URL = "/Tchat/CreateResultat";
+            $.ajax({
+                url: URL,
+                type: "POST",
+                data: { IdAuteur: @ViewBag.user.Id, IdDestinataire: @Model.destinataire.Id},
+                success: function (rep) {
+                    $("#score-auteur").text(rep.ScoreAuteur);
+                    $("#nom-auteur").text("@ViewBag.user.Nom");
+                    $("#score-destinataire").text(rep.ScoreDestinataire);
+                    $("#nom-destinataire").text("@Model.destinataire.Nom");
+                }
+            })
+            $("#createResultat").modal("open");
+
+        })
+
+        $("#send").click(function () {
+            send();
+        });
+
+        function send() {
+            var URL = "/Tchat/SendMessage";
+            var message = $.trim($("#message").val());
+            console.log(message)
+            if (message) {
+                $.ajax({
+                    url: URL,
+                    type: "POST",
+                    data: {
+                        IdAuteur: @ViewBag.user.Id, IdDestinataire: @Model.destinataire.Id, Content: message,
+                        Etat: "non-lu"
+                    },
+                    success: function (rep) {
+                        createSendMsg(message, rep);
+                        $("#message").val("");
+                    }
+                });
+            }
+        }
+
+        function createReceivedMsg(message, rep) {
+            var imgProfil ='<img class="circle" src="~/Images/user.png"/>';
+
+            var username = $("#userDestinataire").val();
+            var dateCreation = moment(rep.DateCreation, 'YYYY-MM-DDThh:mm:ssZ').fromNow();
+
+            var div = "<div class='incoming_message'>" +
+                "<div class='user-chip-left chip'>" +
+                imgProfil +
+                username +
+                "</div>" +
+                "<div class='received_message'>" +
+                "<div class='received_width_message'>" +
+                "<div class='card-panel grey lighten-3 message-content'>" +
+                " <span class='grey-text'>" + dateCreation + "</span>" +
+                "<p id=" + rep.Id + " class='grey-text'>" + message + "</p>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>";
+            $(".discussion_content").append(div);
+        }
+
+        function createSendMsg(message, rep) {
+            var imgProfil = '<img class="circle" src="~/Images/user.png"/>';
+         
+            var username = $("#userAuteur").val();
+            console.log(rep.DateCreation)
+            var dateCreation = moment(rep.DateCreation, 'YYYY-MM-DDThh:mm:ssZ').fromNow();
+            var div = "<div class='outgoing_message'>" +
+                "<div class='right user-chip-right chip amber lighten-3'>" +
+                imgProfil +
+                username +
+                "</div>" +
+                "<div class='sent_message'>" +
+                "<div class='card-panel amber lighten-3 message-content'>" +
+                " <span class='grey-text'>" + dateCreation + "</span>" +
+                "<p id=" + rep.Id + " class='grey-text'>" + message + "</p>" +
+                "</div>" +
+                "</div>" +
+                "</div>";
+            $(".discussion_content").append(div);
+        }
+
+        function charger() {
+            var URL = "/Tchat/GetLastMessage";
+            var lastMessage = $(".discussion_content p:last").attr('id');
+            chargerMessage(URL, lastMessage);
+            setTimeout(function () {
+                charger();
+            }, 1000)
+        }
+
+        function chargerMessage(URL, lastMessage) {
+            $.ajax({
+                url: URL,
+                data: {
+                    IdAuteur: @ViewBag.user.Id,
+                    IdDestinataire: @Model.destinataire.Id,
+                    IdLastMessage: lastMessage
+                },
+                success: function (rep) {
+                    var i;
+                    for (i = 0; i < rep.length; i++) {
+                        createReceivedMsg(rep[i].Content, rep[i]);
+                    }
+                }
+            });
+        }
+
+        $("#message").click(function () {
+            var URL = "/Message/AddViewMessage";
+            $.ajax({
+                url: URL,
+                data: {
+                    IdAuteur: @ViewBag.user.Id,
+                    IdDestinataire: @Model.destinataire.Id
+                },
+                success: function () {}
+            })
+        });
+
+        function addVu(URL){
+            var lastMessage = $(".discussion_content p:last").attr('id');
+            $.ajax({
+                url: URL,
+                data: {
+                    IdAuteur: @ViewBag.user.Id,
+                    IdDestinataire: @Model.destinataire.Id,
+                    IdLastMessage: lastMessage
+                },
+                success: function (rep) {
+                    if(rep == "lu") {
+                        $("#message-vu").remove();
+                        var lastContent = $(".discussion_content p:last").parent();
+                        lastContent.append("<span id='message-vu'>Vu</span>")
+                    }
+                }
+            });
+        }
+
+        function addVuMessage(){
+            var URL = "Tchat/IsMessageVu";
+            addVu(URL);
+            setTimeout(function () {
+                addVuMessage();
+            }, 1000)
+        }
+
+    });
+</script>
+
+
+
+
+
+

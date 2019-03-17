@@ -56,22 +56,100 @@
         </table>
         <br>
     </div>
+</main>
 
-    @if (ViewBag.error != null)
-    {
-        <div id="errorModal" class="modal">
-            <div class="modal-content">
-                <a class="modal-action modal-close btn-floating grey darken-3 right"><i class="material-icons">close</i></a>
-                <h5 class="center red-text">@ViewBag.error</h5>
+<!-- modal zone -->
+<!------------ modal createData -------------->
+<div id="createData" class="modal">
+    <div class="modal-content">
+        <a class="modal-action modal-close btn-floating grey darken-3 right"><i class="material-icons">close</i></a>
+        <h5 class="center indigo-text">Nouveau Message</h5>
+        @using (Html.BeginForm("Save", "Utilisateur", FormMethod.Post, new { @class = "row" }))
+        {
+            <input type="hidden" name="Statut" value="0" required>
+            <input type="hidden" name="DateCreation" value="@DateTime.Now" required>
+            <div class="input-field col s12">
+                <input type="text" name="Nom" required>
+                <label>
+                    Nom
+                    <span class="red-text">*</span>
+                </label>
             </div>
-            <div class="modal-footer">
-                <div class="center-align">
-                    <a class="modal-action modal-close waves-effect waves-green btn black">Fermer</a>
-                </div>
+            <div class="input-field col s12">
+                <input type="password" name="Password" required>
+                <label>
+                    Mot de passe
+                    <span class="red-text">*</span>
+                </label>
+            </div>
+            <div class="input-field col s12">
+                <select name="Type" required>
+                    <option value="1">Admin</option>
+                    <option value="2">Joueur</option>
+                </select>
+                <label>
+                    type
+                    <span class="red-text">*</span>
+                </label>
+            </div>
+            <div class="center-align"><button type="submit" class="btn btn-large waves-effect indigo darken-3"><i class="material-icons right">done</i>Enregistrer</button></div>
+        }
+    </div>
+</div>
+
+<!------------ modal editData -------------->
+<div id="editData" class="modal">
+    <div class="modal-content">
+        <a class="modal-action modal-close btn-floating grey darken-3 right"><i class="material-icons">close</i></a>
+        <h5 class="center indigo-text">Modifier Utilisateur</h5>
+        @using (Html.BeginForm("Save", "Utilisateur", FormMethod.Post, new { @class = "row" }))
+        {
+            <input type="hidden" id="idEdit" name="Id" required>
+            <input type="hidden" id="statutEdit" name="Statut" value="0" required>
+            <input type="hidden" id="dateCreationEdit" name="DateCreation" required>
+            <div class="input-field col s12">
+                <input type="text" id="nomEdit" name="Nom" required>
+                <label>
+                    Nom
+                    <span class="red-text">*</span>
+                </label>
+            </div>
+            <div class="input-field col s12">
+                <input type="password" name="Password">
+                <label>
+                    Mot de passe
+                </label>
+            </div>
+            <div class="input-field col s12">
+                <select id="typeEdit" name="Type" required>
+                    <option value="1">Admin</option>
+                    <option value="2">Joueur</option>
+                </select>
+                <label>
+                    type
+                    <span class="red-text">*</span>
+                </label>
+            </div>
+            <div class="center-align"><button type="submit" class="btn btn-large waves-effect indigo darken-3"><i class="material-icons right">done</i>Enregistrer</button></div>
+        }
+    </div>
+</div>
+
+@if (ViewBag.error != null)
+{
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <a class="modal-action modal-close btn-floating grey darken-3 right"><i class="material-icons">close</i></a>
+            <h5 class="center red-text">@ViewBag.error</h5>
+        </div>
+        <div class="modal-footer">
+            <div class="center-align">
+                <a class="modal-action modal-close waves-effect waves-green btn black">Fermer</a>
             </div>
         </div>
-    }
-</main>
+    </div>
+}
+
 <script>
 $(document).ready(function () {
     //--------------- DataTables

@@ -42,6 +42,20 @@ namespace AppliWeb.Controllers
             return RedirectToAction("AllMessages", "Message");
         }
 
+        //---------- Ajax calling
+        [AllowAnonymous]
+        public void AddViewMessage(Message mess)
+        {
+            MessageService.AddViewMessage(mess.IdAuteur, mess.IdDestinataire);
+        }
+
+        [AllowAnonymous]
+        public String IsMessageView(int idLastMessage, int idAuteur, int idDestinataire)
+        {
+            bool isView = MessageService.IsMessageVu(idLastMessage, idAuteur, idDestinataire);
+            if (isView) return "success";
+            return "error";
+        }
 
     }
 }
