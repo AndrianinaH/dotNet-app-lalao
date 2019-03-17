@@ -8,6 +8,7 @@ using ProjetService.Services;
 
 namespace AppliWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UtilisateurController : BaseController
     {
         // GET: Utilisateur
@@ -15,6 +16,8 @@ namespace AppliWeb.Controllers
         {
             ViewBag.Title = "Gestion des utilisateurs";
             ViewBag.color = this.color;
+            ViewBag.user = this.GetConnectedUser();
+
 
             ViewBag.error = TempData["error"];
 

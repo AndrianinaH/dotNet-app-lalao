@@ -8,6 +8,7 @@ using ProjetService.Services;
 
 namespace AppliWeb.Controllers
 {
+    [Authorize(Roles = "Joueur")]
     public class IndexController : BaseController
     {
         // GET: Index
@@ -15,6 +16,7 @@ namespace AppliWeb.Controllers
         {
             ViewBag.Title = "Tableau de bord";
             ViewBag.color = this.color;
+            ViewBag.user = this.GetConnectedUser();
 
             dynamic myModel = new ExpandoObject();
             myModel.messages = MessageService.GetMessageById(1);

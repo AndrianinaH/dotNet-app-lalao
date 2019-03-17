@@ -148,6 +148,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -231,6 +232,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Message\AllMessages.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Auth\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

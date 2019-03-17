@@ -9,6 +9,7 @@ using ProjetService.Services;
 
 namespace AppliWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MessageController : BaseController
     {
         // GET: Message
@@ -16,6 +17,7 @@ namespace AppliWeb.Controllers
         {
             ViewBag.Title = "Gestion des messages";
             ViewBag.color = this.color;
+            ViewBag.user = this.GetConnectedUser();
 
             ViewBag.error = TempData["error"];
 

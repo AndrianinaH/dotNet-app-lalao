@@ -8,6 +8,7 @@ using ProjetService.Services;
 
 namespace AppliWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ResultatController : BaseController
     {
         // GET: Resultat
@@ -15,7 +16,9 @@ namespace AppliWeb.Controllers
         {
             ViewBag.Title = "Gestion des résultats";
             ViewBag.color = this.color;
-        
+            ViewBag.user = this.GetConnectedUser();
+
+
             dynamic myModel = new ExpandoObject();
             myModel.allResultat = ResultatService.AllResultat();
 

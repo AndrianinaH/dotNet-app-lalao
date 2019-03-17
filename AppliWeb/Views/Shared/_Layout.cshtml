@@ -31,7 +31,7 @@
                         <!-- Dropdown Structure -->
                         <ul id="dropdown-profil" class="my-dropdown dropdown-content">
                             <li>
-                                <a href="/auth/logout">Se déconnecter</a>
+                                <a href="/Auth/Logout">Se déconnecter</a>
                             </li>
                         </ul>
                     </ul>
@@ -57,13 +57,13 @@
                 </a>
                 <a href="/auth/profil">
                     <span class="white-text email">
-                        <strong>Utilisateur</strong>
+                        <strong>@ViewBag.user.Nom</strong>
                     </span>
                 </a>
             </div>
         </li>
-        @*<g:if test="${session.grails_user != null}">
-            <g:if test="${session.grails_user.type == 1}">*@
+        @if(@ViewBag.user != null) {
+            if (@ViewBag.user.Type == 1){
                 <li class="no-padding">
                     <a href="/Resultat/AllResultats">
                         <i class="material-icons">insert_chart</i>Liste des résultats
@@ -88,11 +88,13 @@
                 <li>
                     <div class="divider"></div>
                 </li>
-            @*</g:if>
-        </g:if>*@
+            }
+        }
 
-        @*<g:if test="${session.grails_user != null}">
-            <g:if test="${session.grails_user.type == 2}">*@
+        @if (@ViewBag.user != null)
+        {
+            if (@ViewBag.user.Type == 2)
+            {
                 <li class="no-padding">
                     <a href="/">
                         <i class="material-icons">dashboard</i>Tableau de bord
@@ -113,9 +115,8 @@
 
                 <div id="user-connected">
                 </div>
-
-            @*</g:if>
-        </g:if>*@
+            }
+        }
 
     </ul>
 

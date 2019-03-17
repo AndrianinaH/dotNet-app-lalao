@@ -23,6 +23,16 @@ namespace AppliWeb
                       "~/Content/jquery.dataTables.css",
                       "~/Content/materialize.min.css"
                       ));
+
+            bundles.Add(new ScriptBundle("~/ScriptMin/js").Include(
+                     "~/Scripts/jquery-3.1.1.min.js",
+                     "~/Scripts/materialize.min.js"
+                     ));
+
+            bundles.Add(new StyleBundle("~/Login/css").Include(
+                     "~/Content/materialize.min.css",
+                     "~/Content/login.css"
+                     ));
         }
     }
 }

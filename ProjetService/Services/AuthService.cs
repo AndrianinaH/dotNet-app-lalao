@@ -13,7 +13,7 @@ namespace ProjetService.Services
 {
     public class AuthService
     {
-        public static void Login(Utilisateur utilisateur)
+        public static Utilisateur Login(Utilisateur utilisateur)
         {
             using (var ctx = new ConfigContext())
             {
@@ -25,6 +25,7 @@ namespace ProjetService.Services
                     userConnecter.Statut = 1;
                     ctx.Utilisateurs.AddOrUpdate(userConnecter);
                     ctx.SaveChanges();
+                    return userConnecter;
                 }
                 else throw new Exception("Authentification echouer");
             }
